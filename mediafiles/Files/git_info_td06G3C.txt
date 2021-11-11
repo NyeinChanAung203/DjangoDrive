@@ -1,0 +1,8 @@
+# personal access token
+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
+
+git init
+git remote add origin http://....
+git add .
+git add filename.ext
+git push -u origin master

@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- Button trigger modal -->
+<div class="text-end mb-3">
+<button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <i class="fas fa-folder-plus"></i>&nbsp;Add Folder
+  </button>
+</div>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Folder</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="POST" action="{% url 'drive:addFolder' %}">
+              {% csrf_token %}
+            <div class="mb-3">
+                <label for="addfolder" class="form-label">Folder Name</label>
+                <input type="text" name="addfolder" class="form-control" id="addfolder" placeholder="Enter folder name" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <input type="text" name="description" class="form-control" id="description" placeholder="Enter description">
+            </div>
+            <input type="submit" class="btn btn-outline-success" value="Create">
+          </form>
+        </div>
+       
+      </div>
+    </div>
+  </div>
+  {% if folders %}
+  <div class="row row-cols-1 row-cols-md-4 g-4">
+      {% for folder in folders %}
+    <div class="col">
+      <div class="card shadow-sm bg-light">
+        <div class="card-body">
+          <h5 class="card-title">{{folder.foldername}}</h5>
+          <p class="card-text p-2 text-muted">{{folder.description}}</p>
+          <a href="{% url 'drive:folder' folder.id %}" class="btn btn-outline-success"><i class="far fa-folder-open"></i>&nbsp;Open</a>
+          
+          <!-- ------------------- -->
+          <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteFolder">
+            <i class="far fa-trash-alt"></i>&nbsp;Delete
+          </button>
+        </div>
+          
+          <div class="modal fade" id="deleteFolder" tabindex="-1" aria-labelledby="deleteFolderLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <!-- <div class="modal-header">
+                  <h6 class="modal-title" id="deleteFolderLabel"><i class="far fa-trash-alt"></i></h6>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div> -->
+                <div class="modal-body">
+                 <h4 class="m-5">Are you sure to delete "{{folder.foldername}}" folder ?</h4>
+                 
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <a href="{% url 'drive:delete-folder' folder.id %}" class="btn btn-outline-danger">Delete</a>
+                  
+                </div>
+               
+              </div>
+            </div>
+          </div>
+          <!-- --------------------- -->
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+    <div class="text-center">
+        <img src="{% static 'empty.svg' %}" class="w-25">
+        <p class="text-muted mt-5">No data</p>
+    </div>
+    {% endif %}
+{% endblock content %}

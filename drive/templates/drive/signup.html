@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+<form method="POST" action="{% url 'drive:signup' %}">
+    {% csrf_token %}
+    <!-- <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Email address</label>
+        <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+      </div>
+      <div class="mb-3">
+          <label for="firstname" class="form-label">First Name</label>
+          <input type="text" name="fname" class="form-control" id="firstname" required>
+          
+      </div>
+      <div class="mb-3">
+          <label for="lastname" class="form-label">Last Name</label>
+          <input type="text" name="lname" class="form-control" id="lastname" required>
+        </div> -->
+        
+   {{form|crispy}}
+
+   <!-- <div class="mb-3">
+    <label for="username" class="form-label">Username</label>
+    <input type="text" name="username" class="form-control" id="username" aria-describedby="usernameHelp" required>
+    
+</div> -->
+
+    
+<!-- </div>
+<div class="mb-3">
+  <label for="exampleInputPassword1" class="form-label">Password</label>
+  <input type="password" name="password" class="form-control" id="exampleInputPassword1" required>
+</div>
+<div class="mb-3">
+    <label for="exampleInputPassword2" class="form-label">Confirm Password</label>
+    <input type="password" name="cpassword" class="form-control" id="exampleInputPassword2" required>
+  </div> -->
+    
+    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+  </form>
+
+{% endblock content %}
+
